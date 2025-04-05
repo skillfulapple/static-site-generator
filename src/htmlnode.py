@@ -1,3 +1,6 @@
+#from textnode import *
+
+
 class HTMLNode:
 	def __init__(
 		self,
@@ -52,11 +55,21 @@ class LeafNode(HTMLNode):
 
 class ParentNode(HTMLNode):
 	def __init__(self, tag, children, props=None):
-		super().__init__(tag, value=None, children, props)
+		super().__init__(tag, None, children, props)
 
 	def to_html(self):
 		if self.tag == None:
 			raise ValueError("invalid: no tag")
 		if self.children == None:
 			raise ValueError("invalid: no children")
-		...
+
+		string = ""
+		string += f"<{self.tag}{self.props_to_html()}>"
+		for child in self.children:
+			string += child.to_html()
+		string += f"</{self.tag}>"
+
+		return string
+
+	def __repr__(self):
+		return f"ParentNode({self.tag}, {self.children}, {self.props})"

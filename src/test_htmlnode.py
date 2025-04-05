@@ -71,7 +71,29 @@ class TestLeafNode(unittest.TestCase):
 			)
 
 
+class TestParentNode(unittest.TestCase):
+	def test_simple_parent_to_html(self):
+		node = ParentNode("p", [LeafNode("b", "Hello, world!")])
+		self.assertEqual(
+			node.to_html(),
+			"<p><b>Hello, world!</b></p>"
+			)
+
+	def test_complex_parent_to_html(self):
+		node = ParentNode("p", [
+				ParentNode("p", [LeafNode("b", "Hello, world!")]),
+				LeafNode("b", "Hello, again!")
+				])
+		self.assertEqual(
+			node.to_html(),
+			"<p><p><b>Hello, world!</b></p><b>Hello, again!</b></p>"
+			)
+
+
+# other tests to add:
+# test all for errors
+# test ParentNode for simple with props
+
 
 if __name__ == "__main__":
 	unittest.main()
-
